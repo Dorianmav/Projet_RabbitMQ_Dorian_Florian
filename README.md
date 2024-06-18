@@ -3,5 +3,7 @@
 Pour installer les dependences:
 npm install
 
-pour lancer le projet, ouvrer votre docker et lancez:
+pour lancer le projet, ouvrez votre docker et lancez:
 npm run setup
+
+pour relancer juste le back:
