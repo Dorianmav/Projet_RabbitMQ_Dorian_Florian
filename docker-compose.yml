@@ -1,0 +1,17 @@
+version: '3.8'
+
+name: 'postgres_projet-rabbit-bd'
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "${DATABASE_PORT}:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
