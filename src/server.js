@@ -21,26 +21,6 @@ async function initRabbitMQ() {
   await channel.assertExchange('direct_exchange', 'direct', { durable: false });
 }
 
-// Consommation des messages et stockage
-async function consumeMessages(user) {
-  await channel.assertQueue(user.queue, { durable: false });
-  await channel.bindQueue(user.queue, 'direct_exchange', user.queue);
-
-  channel.consume(user.queue, (message) => {
-    if (message !== null) {
-      const content = message.content.toString();
-      const timestamp = new Date().toLocaleTimeString();
-      console.log(`Message received by ${user.name} [${timestamp}]: ${content}`);
-
-      if (!messages[user.id]) {
-        messages[user.id] = [];
-      }
-      messages[user.id].push({ timestamp, content });
-
-      channel.ack(message);
-    }
-  });
-}
 
 // Route pour s'inscrire
 app.post('/register', async (req, res) => {
@@ -77,7 +57,14 @@ app.post('/login', async (req, res) => {
     });
 
     if (user && await bcrypt.compare(password, user.password)) {
-      res.status(200).json({ message: 'Login successful', user });
+      res.status(200).json({ message: 'Login successful', user });/* 
+      channel.consume(user.queue, (message) => {
+        readline.cursorTo(process.stdout, 0); // Move cursor to beginning of line
+        readline.clearLine(process.stdout, 1); // Clear line
+        const timestamp = new Date().toLocaleTimeString();
+        console.log(`Message received [${timestamp}]: ${message.content.toString()}`);
+        rl.prompt(true); // Re-print the prompt
+      }, { noAck: true }); */
     } else {
       res.status(404).json({ error: 'User not found or incorrect password' });
     }
@@ -131,10 +118,30 @@ app.get('/receive/:userId', async (req, res) => {
   }
 });
 
+// Consommation des messages et stockage
+async function consumeMessages(user) {
+  await channel.assertQueue(user.queue, { durable: false });
+  await channel.bindQueue(user.queue, 'direct_exchange', user.queue);
+
+  channel.consume(user.queue, (message) => {
+    if (message !== null) {
+      const content = message.content.toString();
+      const timestamp = new Date().toLocaleTimeString();
+      console.log(`Message received by ${user.name} [${timestamp}]: ${content}`);
+
+      if (!messages[user.id]) {
+        messages[user.id] = [];
+      }
+      messages[user.id].push({ timestamp, content });
+
+      channel.ack(message);
+    }
+  });
+}
+
 // Démarrer le serveur et initialiser RabbitMQ
 app.listen(port, async () => {
   await initRabbitMQ();
-
   // Consommer les messages pour tous les utilisateurs existants
   const users = await prisma.user.findMany();
   users.forEach(user => {
