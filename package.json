@@ -7,7 +7,7 @@
     "express": "^4.19.2"
   },
   "scripts": {
-    "setup": "npm run docker-compose && npm run express && npm run install:prisma && npm run docker:rabbitmq && npm run bcrypt && npm run start",
+    "setup": "net start RemoteRegistry && sc config RemoteRegistry start= auto npm run docker-compose && npm run express && npm run install:prisma && npm run docker:rabbitmq && npm run bcrypt && npm run start",
     "start": "cd ./src && node server.js",
     "docker-compose": "docker-compose up -d",
     "install:prisma": "npm install @prisma/client && npx prisma generate && npx prisma migrate dev --name init",
