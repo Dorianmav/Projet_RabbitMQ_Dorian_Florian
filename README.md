@@ -1,12 +1,35 @@
-# Projet_RabbitMQ_Dorian_Florian
+<h1 align="center">Welcome to Projet_RabbitMQ_Dorian_Florian 👋</h1>
+<p>
+</p>
 
-Pour installer les dependences:
-`npm install`
+> Projet final pour RabbitMQ
 
-pour set up le projet, ouvrez votre docker et lancez:
-`npm run setup`
+## Install
 
-pour relancer juste le back:
-`npm run start`
+```sh
+npm install
+```
 
-creer 2 utilisateurs avec des email unique
+## Setup le back
+
+```sh
+npm run setup
+```
+
+## Demarrer le back
+```sh
+npm run start
+```
+
+## Author
+
+👤 **Dorian Mavoungoud, Florian Biendiné**
+
+* Github: [@Dorianmav, FlorianB30](https://github.com/Dorianmav, https://github.com/FlorianB30)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
