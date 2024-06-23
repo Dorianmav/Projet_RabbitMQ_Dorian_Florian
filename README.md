@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to Projet_RabbitMQ_Dorian_Florian 👋</h1>
+<h1 align="center">Projet RabbitMQ Dorian et Florian 👋</h1>
 <p>
 </p>
 
