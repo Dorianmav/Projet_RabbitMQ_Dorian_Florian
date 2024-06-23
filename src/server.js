@@ -143,6 +143,15 @@ app.get('/conversation/:userId1/:userId2', async (req, res) => {
   }
 });
 
+app.get('/users', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 
 // Démarrer le serveur et initialiser RabbitMQ
 app.listen(port, async () => {
