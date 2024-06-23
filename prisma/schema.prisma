@@ -34,12 +34,3 @@ model Message {
   sender   User @relation("SentMessages", fields: [senderId], references: [id])
   receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
-
-
-// model User {
-//  id    Int    @id @default(autoincrement())
-//  name  String
-//  email String @unique
-//  password String
-//  queue String
-// }
