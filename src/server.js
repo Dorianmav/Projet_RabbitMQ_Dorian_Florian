@@ -109,8 +109,9 @@ app.post('/send', async (req, res) => {
   }
 });
 
-app.get('/conversation/:userId1/:userId2', async (req, res) => {
-  const { userId1, userId2 } = req.params;
+app.get('/conversation/:users', async (req, res) => {
+  let users = req.params.users.split('+');
+  const [userId1, userId2 ] = users;
 
   try {
     const user1 = await prisma.user.findUnique({
@@ -128,8 +129,8 @@ app.get('/conversation/:userId1/:userId2', async (req, res) => {
     const conversation = await prisma.message.findMany({
       where: {
         OR: [
-          { senderId: user1.id, receiverId: user2.id },
-          { senderId: user2.id, receiverId: user1.id }
+          { senderId: user1.id },
+          { receiverId: user2.id }
         ]
       },
       orderBy: {
