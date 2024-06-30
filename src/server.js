@@ -129,8 +129,8 @@ app.get('/conversation/:users', async (req, res) => {
     const conversation = await prisma.message.findMany({
       where: {
         OR: [
-          { senderId: user1.id },
-          { receiverId: user2.id }
+          { senderId: user1.id, receiverId: user2.id },
+          { senderId: user2.id, receiverId: user1.id }
         ]
       },
       orderBy: {
